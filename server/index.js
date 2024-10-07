@@ -5,10 +5,18 @@
  const mongoose = require('mongoose');
  const router = require('./router/index');
  const errorMiddleware = require('./middlewares/error-middleware')
+ const rateLimit = require('express-rate-limit');
 
  const PORT = process.env.PORT || 5000;
  const app = express();
 
+    const limiter = rateLimit({
+        windowMs: 60 * 1000,
+        max: 20,
+        message: 'Too many requests from this IP, please try again after a minute'
+    });
+
+ app.use('/api/refresh', limiter);
  app.use(express.json());
  app.use(express.json());
  app.use(cors({
