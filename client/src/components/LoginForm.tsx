@@ -6,7 +6,16 @@ import '../styles/LoginForm.css';
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const {store} = useContext(Context);
+
+    const handleRegistration = () => {
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        store.registration(email, password);
+    }
 
     return (
         <div className="login-form-container">
@@ -25,8 +34,15 @@ const LoginForm: FC = () => {
                     placeholder='Password'
                     className="login-input"
                 />
+                <input
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={confirmPassword}
+                    type="password"
+                    placeholder='Confirm password'
+                    className="login-input"
+                />
                 <button onClick={() => store.login(email, password)} className="login-button">Login</button>
-                <button onClick={() => store.registration(email, password)} className="register-button">Registration</button>
+                <button onClick={handleRegistration} className="register-button">Registration</button>
             </div>
         </div>
     );
