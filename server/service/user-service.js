@@ -6,6 +6,7 @@ const tokenService = require('./token-service');
 const UserDto = require('../dtos/user-dto');
 const userModel = require('../models/user-model');
 const ApiError = require('../exceptions/api-error');
+const ArticleModel = require('../models/article-model');
 
 class UserService {
     async registration(email, password){
@@ -77,6 +78,16 @@ class UserService {
     async getAllUsers(){
         const users = await UserModel.find();
         return users;
+    }
+
+    async searchArticles(search){
+        const articles = await ArticleModel.find({title: {$regex: search, $options: 'i'}})
+        return articles;
+    }
+
+    async addArticle(title, description) {
+        const article = await ArticleModel.create({title, description});
+        return article;
     }
 }
 

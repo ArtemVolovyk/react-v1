@@ -10,6 +10,7 @@ router.post('/registration',
     userController.registration);
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
+router.post('/articles', userController.addArticle);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);

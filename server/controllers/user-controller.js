@@ -57,7 +57,8 @@ class UserController {
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: 'Strict'
+                sameSite: 'Lax',
+                secure: process.env.NODE_ENV
             })
             return res.json(userData);
         } catch (e) {
@@ -78,6 +79,17 @@ class UserController {
         } catch (e) {
             next(e);
         }
+    }
+
+    async addArticle(req, res, next){
+        try{
+            const {title, description} = req.body;
+            const article = await userService.addArticle(title, description);
+            return res.json(article);
+        } catch (e) {
+            next(e);
+        }
+    
     }
 
     
