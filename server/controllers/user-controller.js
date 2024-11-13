@@ -83,8 +83,10 @@ class UserController {
 
     async addArticle(req, res, next){
         try{
-            const {title, description} = req.body;
-            const article = await userService.addArticle(title, description);
+            const {
+                title, description, image, date
+                } = req.body;
+            const article = await userService.addArticle(title, description, image, date);
             return res.json(article);
         } catch (e) {
             next(e);

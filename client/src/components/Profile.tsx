@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite";
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import '../styles/Profile.css';
+import { set } from 'mobx';
 
 const Profile: FC = () => {
     const {store} = useContext(Context);
@@ -11,6 +12,8 @@ const Profile: FC = () => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [owner, setOwner] = useState('');
+    const [image, setImage] = useState('');
 
     const gotoMain = () => {
         navigate('/');
@@ -23,12 +26,14 @@ const Profile: FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ title, description }),
+                body: JSON.stringify({ title, description, owner, image }),
             });
             if (response.ok) {
                 alert('Article submitted successfully');
                 setTitle('');   
                 setDescription('');
+                setOwner('');
+                setImage('');
             } else {
                 alert('Failed to submit article');
             }
@@ -79,6 +84,14 @@ const Profile: FC = () => {
                     <input type="text" 
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Image</label>
+                    <input type="text" 
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
                         required
                     />
                 </div>

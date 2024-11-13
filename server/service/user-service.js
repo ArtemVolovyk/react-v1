@@ -85,8 +85,8 @@ class UserService {
         return articles;
     }
 
-    async addArticle(title, description) {
-        const article = await ArticleModel.create({title, description});
+    async addArticle(title, description, image) {
+        const article = await ArticleModel.create({title, description, image});
         return article;
     }
 }
